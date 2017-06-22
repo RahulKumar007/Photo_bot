@@ -7,6 +7,7 @@ import requests
 # Importing urllib for downloading photos
 import urllib
 
+# Importing textblob for sentiment analysis of comments
 from textblob import TextBlob
 
 from textblob.sentiments import NaiveBayesAnalyzer
