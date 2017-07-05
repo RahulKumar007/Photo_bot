@@ -57,7 +57,7 @@ def self_info():
 
     else:
 
-        print 'Error :- ' + str(my_info['meta']['code'])
+        print 'Error :- %d' % str(my_info['meta']['code'])
 
 
 # Method to get user_id based on user_name
@@ -80,7 +80,7 @@ def get_user_id(insta_username):
 
     else:
 
-        print 'Error :- ' + my_info['meta']['code']
+        print 'Error :- %d' % my_info['meta']['code']
 
 
 # Getting the info of a user using username
@@ -99,7 +99,8 @@ def get_user_info(insta_username):
         # Checking if there actually is anything in the data. It might be empty.
         if len(user_info['data']):
 
-            print 'Username: %s' % (user_info['data']['username'])
+            print 'Username: %s' \
+                  '' % (user_info['data']['username'])
 
             print 'No. of followers: %s' % (user_info['data']['counts']['followed_by'])
 
@@ -113,7 +114,7 @@ def get_user_info(insta_username):
 
     else:
 
-        print 'Error :- ' + user_info['meta']['code']
+        print 'Error :- %d' % user_info['meta']['code']
 
 
 # Getting the posts posted by self
@@ -139,9 +140,10 @@ def get_own_post():
             print 'There are no recent posts!'
     else:
 
-        print 'Error :- ' + recent_posts['meta']['code']
+        print 'Error :- %d' % recent_posts['meta']['code']
 
     return None
+
 
 # Getting the posts posted by user
 def get_users_post(insta_username):
@@ -168,7 +170,6 @@ def get_users_post(insta_username):
         for post in range(0, len(users_post['data'])):
 
             if users_post['data'][post]['likes']['count'] < like_count:
-
                 like_count = users_post['data'][post]['likes']['count']
 
                 post_index = post
@@ -207,7 +208,6 @@ def get_users_post(insta_username):
 
             # Comparing the caption regardless of case
             if caption.lower() in caption_text.lower():
-
                 post_index = post
 
         # Downloading and Getting the media_id of the required captioned post
@@ -227,9 +227,9 @@ def get_users_post(insta_username):
         print 'Wrong Choice'
         return None
 
+
 # Method to download the post and return the media_id
 def download_user_post(users_post, post_index):
-
     if users_post['meta']['code'] == 200:
 
         if len(users_post['data']):
@@ -249,9 +249,10 @@ def download_user_post(users_post, post_index):
 
     else:
 
-        print 'Error :- ' + str(users_post['meta']['code'])
+        print 'Error :- %d' %str(users_post['meta']['code'])
 
     return None
+
 
 # Method to get recent image liked by self
 def get_like_list():
@@ -271,13 +272,13 @@ def get_like_list():
         else:
             print 'There is no recent post!'
     else:
-        print 'Error :- ' + str(users_post['meta']['code'])
+        print 'Error :-  %d' % str(users_post['meta']['code'])
 
     return None
 
+
 # Method to like the recent post by a user
 def like_a_post(insta_username):
-
     media_id = get_users_post(insta_username)
 
     # Payload for the post request
@@ -298,6 +299,7 @@ def like_a_post(insta_username):
 
         print 'Couldn\'t like the post! Please try again!'
 
+
 # Method to get the list of comments
 def get_comment_list(insta_username):
     media_id = get_users_post(insta_username)
@@ -311,11 +313,11 @@ def get_comment_list(insta_username):
 
     else:
 
-        print 'Error :- ' + comments_info['meta']['code']
+        print 'Error :- %d' % comments_info['meta']['code']
+
 
 # Method to post a comment on the recent post by a user
 def post_a_comment(insta_username):
-
     media_id = get_users_post(insta_username)
 
     comment = raw_input('Enter the comment for downloaded media with name and media_id :- %s.' % media_id)
@@ -335,9 +337,10 @@ def post_a_comment(insta_username):
 
     else:
 
-        print 'Error :- ' + post_comment['meta']['code']
+        print 'Error :- %d' % post_comment['meta']['code']
 
         print '\n Try again later!'
+
 
 # Method to simplify the DELETE request and returning the response in json format
 def del_comments(del_url, del_params):
@@ -356,9 +359,9 @@ def del_comments(del_url, del_params):
     # Returning the DELETE request response
     return requests.delete(request_url).json()
 
+
 #  Method to delete any negative comments or comment containing a particular word
 def delete_negative_comment(insta_username):
-
     # Getting the comment info
     comments_info = get_comment_list(insta_username)
 
@@ -419,11 +422,11 @@ def delete_negative_comment(insta_username):
 
                         if delete_comment['meta']['code'] == 200:
 
-                            print 'Comment with id %s deleted' %comment_id
+                            print 'Comment with id %s deleted' % comment_id
 
                         else:
 
-                            print 'Error : ' + delete_comment['meta']['code']
+                            print 'Error : %d' % delete_comment['meta']['code']
                             print 'Couldn\'t delete the comment! Please try again!'
 
 
@@ -433,14 +436,9 @@ def delete_negative_comment(insta_username):
 
     else:
 
-        print 'Error :- ' + comments_info[0]['meta']['code']
+        print 'Error :- %d' % comments_info[0]['meta']['code']
 
         print '\n Try again later!'
-
-
-
-
-
 
 
 print 'Welcome to PhotoBot!\nWe provide some cool Instagram functionalities! '
@@ -496,7 +494,6 @@ while True:
             print 'For media id :' + comments_info[1]
 
             for comment in range(0, len(comments_info[0]['data'])):
-
                 print str(comment + 1) + '. ' + comments_info[0]['data'][comment]['text']
 
         else:
